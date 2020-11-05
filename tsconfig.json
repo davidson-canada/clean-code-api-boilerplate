@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": true,
+    "target": "ES2020",
+    "removeComments": false
+  },
+  "exclude": ["node_modules", "dist", "dump", "coverage", "test", ".vscode", ".idea", "packages"]
+}

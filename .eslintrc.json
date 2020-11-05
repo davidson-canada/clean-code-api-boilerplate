@@ -1,0 +1,56 @@
+{
+  "extends": [
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "env": {
+    "node": true,
+    "browser": true,
+    "jasmine": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "max-lines-per-function": ["error", 40],
+    "max-lines": [
+      "error",
+      {
+        "max": 300,
+        "skipBlankLines": true,
+        "skipComments": true
+      }
+    ],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-console": "off",
+    "no-debugger": "error",
+    "no-return-await": "error",
+    "max-depth": "error",
+    "complexity": "error",
+    "no-case-declarations": "off"
+  },
+  "settings": {},
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["*.integration-test.ts", "*.test.ts", "*.spec.ts", "*.js"],
+      "rules": {
+        "max-lines-per-function": "off",
+        "max-lines": "off",
+        "no-undef": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["**/index.js", "**/index.d.ts"]
+}

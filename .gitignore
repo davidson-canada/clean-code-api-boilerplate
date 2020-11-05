@@ -1,0 +1,9 @@
+node_modules/
+dump/
+dist/
+coverage/
+.env
+test.rest
+test.json
+.idea
+yarn-error.log

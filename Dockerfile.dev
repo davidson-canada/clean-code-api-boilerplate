@@ -1,0 +1,5 @@
+FROM node:14-slim as build
+WORKDIR /clean-code-api-boilerplate
+COPY *.json *.js yarn.lock *.env ./
+RUN ["yarn"]
+CMD yarn start

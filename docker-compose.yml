@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: devops/clean-code-api-boilerplate-dev:latest
+    container_name: clean-code-api-boilerplate-dev
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: 'local'
+    expose:
+      - 3000
+    volumes:
+      - type: bind
+        source: ./src
+        target: /clean-code-api-boilerplate/src
+      - type: bind
+        source: ./packages
+        target: /clean-code-api-boilerplate/packages
+    tty: true
