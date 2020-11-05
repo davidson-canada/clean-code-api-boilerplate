@@ -12,7 +12,7 @@ export default class LoginServices {
   private constructor() {
     this.repository = new UsersRepositories(); // TODO remove
     this.authService = AuthService.getInstance();
-    this.usersServices = new UsersServices();
+    this.usersServices = UsersServices.getInstance();
   }
 
   public static getInstance = (): LoginServices => {

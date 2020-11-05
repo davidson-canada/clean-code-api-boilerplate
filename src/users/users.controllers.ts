@@ -11,7 +11,7 @@ export default class UsersControllers extends BaseController {
 
   constructor() {
     super();
-    this.usersServices = new UsersServices();
+    this.usersServices = UsersServices.getInstance();
   }
 
   public getUser = async (req: Request, res: Response, next): Promise<Response> => {
@@ -51,7 +51,7 @@ export default class UsersControllers extends BaseController {
       const userToUpdate: User = User.fromUserDTO(userDTO);
 
       if (userToUpdate.password)
-        userToUpdate.password = await AuthService.getInstance().encryptPassword(userToUpdate.password);
+        userToUpdate.password = await AuthService.getInstance().encryptPassword(userToUpdate.password); // TODO : creer variable de classe
       else delete userToUpdate.password;
       delete userToUpdate.isAdmin; // ne semble pas etre pris en compte
       delete userToUpdate.createdAt;
@@ -85,7 +85,7 @@ export default class UsersControllers extends BaseController {
         .catch((err) => {
           console.error("an error occurred when trying to create the user : ", err);
           return super.fail(res, "an error occurred when trying to create the user");
-        });;
+        });
     } catch (e) {
       console.error(e);
       return super.fail(res, e.message);

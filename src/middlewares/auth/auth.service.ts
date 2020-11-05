@@ -8,6 +8,7 @@ import LoginServices from "../../login/login.services";
 import { JWTUser } from "../../login/login.models";
 import jwt from "jsonwebtoken";
 import { ReturnSubmitLoginDTO } from "../../shared/dto/login.dto";
+import { UsersServices } from "../../users/users.services";
 
 export default class AuthService {
   private static instance: AuthService;
@@ -48,9 +49,9 @@ passport.use(
     },
     async (req, email, password, done) => {
       try {
-        const { password: userPassword, ...info }: any = req.body;
-        const newUser: any = await LoginServices.getInstance().createUser(email.toLowerCase(), password, info);
-        done(null, newUser, info);
+        const userDTO: any = req.body;
+        const newUser: any = await UsersServices.getInstance().create(userDTO);
+        done(null, newUser);
       } catch (e) {
         done(e);
       }

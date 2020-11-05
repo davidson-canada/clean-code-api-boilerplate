@@ -5,29 +5,20 @@ import AuthService from "../middlewares/auth/auth.service";
 
 export class UsersServices implements BaseCRUDUtils<User> {
   private repository: UsersRepositories;
+  public static instance: UsersServices;
 
-  constructor() {
+  private constructor() {
     this.repository = new UsersRepositories();
   }
-  /*createUser = async (email: string, password: string, _info?: object): Promise<User> => {
-    const user = await this.usersServices.findOne({ email: email.toLowerCase() });
-    if (user) {
-      return Promise.reject("User already exist");
-    } else {
-      const encryptedPassword: string = await this.authService.encryptPassword(password);
 
-      const user: User = new UserSchema({
-        email: email.toLowerCase(),
-        password: encryptedPassword,
-        isAdmin: false,
-        status: true,
-        createdAt: new Date().toISOString(),
-      });
-
-      const newUser = await this.usersServices.create(user); // TODO change by user service call
-      return Promise.resolve(newUser);
+  public static getInstance = (): UsersServices => {
+    if (!UsersServices.instance) {
+      UsersServices.instance = new UsersServices();
     }
-  };*/
+
+    return UsersServices.instance;
+  };
+
   public create = async (newEntity: User): Promise<User> => {
     console.log("trying to create", newEntity);
     const user = await this.findOne({ email: newEntity.email.toLowerCase() });
