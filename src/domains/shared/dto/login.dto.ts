@@ -47,11 +47,15 @@ export interface ReturnSubmitLoginDTO extends IDTO {
  *       properties:
  *         userId:
  *           type: string
- *         password:
+ *         oldPassword:
+ *           type: string
+ *           format: password
+ *         newPassword:
  *           type: string
  *           format: password
  */
 export interface ResetPasswordDTO extends IDTO {
-  password: string;
+  oldPassword: string;
+  newPassword: string;
   userId: string;
 }

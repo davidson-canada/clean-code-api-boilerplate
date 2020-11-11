@@ -1,18 +1,19 @@
-import AuthService from "../../middlewares/auth/auth.service";
-import UserSchema, { User } from "../users/users.models";
-import { UsersRepositories } from "../users/users.repositories";
+import AuthServices from "../../middlewares/auth/auth.services";
 import { UsersServices } from "../users/users.services";
+
+import { User } from "../users/users.models";
+import Config from "../../config";
 
 export default class LoginServices {
   private static instance: LoginServices;
-  private repository: UsersRepositories;
-  private authService: AuthService;
   private usersServices: UsersServices;
+  private authServices: AuthServices;
+  private config: Config;
 
   private constructor() {
-    this.repository = new UsersRepositories(); // TODO remove
-    this.authService = AuthService.getInstance();
     this.usersServices = UsersServices.getInstance();
+    this.authServices = AuthServices.getInstance();
+    this.config = Config.getInstance();
   }
 
   public static getInstance = (): LoginServices => {
@@ -29,15 +30,20 @@ export default class LoginServices {
       return Promise.reject("User not found");
     } else {
       const { password, ...infoUser } = user;
-      const validate: boolean = await this.authService.comparePassword(passwordInput, password);
+      const validate: boolean = await this.authServices.comparePassword(passwordInput, password);
       if (validate) return infoUser;
       else return Promise.reject("Wrong password");
     }
   };
 
-  forgetUserPassword = async (userId: string, passwordInput: string): Promise<User> => {
-    const newPassword: string = await this.authService.encryptPassword(passwordInput);
-    const userUpdate = { password: newPassword };
-    return this.repository.updateById(userId, userUpdate); // TODO change by user service call
+  forgetUserPassword = async (user: User, oldPassword: string, newPassword: string): Promise<User> => {
+    if (await this.authServices.comparePassword(oldPassword, user.password)) {
+      console.log("password correct", newPassword);
+      user.password = await this.authServices.encryptPassword(newPassword);
+
+      return this.usersServices.updateById(user.id, user);
+    } else {
+      throw Error("Wrong password");
+    }
   };
 }

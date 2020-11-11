@@ -1,6 +1,6 @@
 import express from "express";
 import { router } from "./router";
-import "./middlewares/auth/auth.service";
+import "./middlewares/auth/auth.services";
 import MongoDbConnector from "./repositories/mongo.db";
 import Config from "./config";
 

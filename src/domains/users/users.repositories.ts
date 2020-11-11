@@ -2,7 +2,19 @@ import UserSchema, { User } from "./users.models";
 import { BaseCRUDUtils } from "../../utils/baseCRUD.utils";
 
 export class UsersRepositories implements BaseCRUDUtils<User> {
-  async find(options: object): Promise<User[]> {
+  private static instance: UsersRepositories;
+
+  private constructor() {}
+
+  public static getInstance = (): UsersRepositories => {
+    if (!UsersRepositories.instance) {
+      UsersRepositories.instance = new UsersRepositories();
+    }
+
+    return UsersRepositories.instance;
+  };
+
+  async find(options: Record<string, unknown>): Promise<User[]> {
     return UserSchema.find(options).lean();
   }
 
@@ -10,7 +22,7 @@ export class UsersRepositories implements BaseCRUDUtils<User> {
     return UserSchema.findById(id).lean();
   }
 
-  async findOne(options: object): Promise<User> {
+  async findOne(options: Record<string, unknown>): Promise<User> {
     return UserSchema.findOne(options).lean();
   }
 

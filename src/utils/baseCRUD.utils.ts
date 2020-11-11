@@ -1,5 +1,5 @@
 export interface BaseCRUDUtils<T> {
-  find(options?: object): Promise<T[]>;
+  find(options?: Record<string, unknown>): Promise<T[]>;
 
   findById(id: string): Promise<T>;
 

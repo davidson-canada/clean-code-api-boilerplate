@@ -1,14 +1,14 @@
 import { UsersRepositories } from "./users.repositories";
 import { User } from "./users.models";
 import { BaseCRUDUtils } from "../../utils/baseCRUD.utils";
-import AuthService from "../../middlewares/auth/auth.service";
+import AuthServices from "../../middlewares/auth/auth.services";
 
 export class UsersServices implements BaseCRUDUtils<User> {
   private repository: UsersRepositories;
   public static instance: UsersServices;
 
   private constructor() {
-    this.repository = new UsersRepositories();
+    this.repository = UsersRepositories.getInstance();
   }
 
   public static getInstance = (): UsersServices => {
@@ -20,11 +20,10 @@ export class UsersServices implements BaseCRUDUtils<User> {
   };
 
   public create = async (newEntity: User): Promise<User> => {
-    console.log("trying to create", newEntity);
     const user = await this.findOne({ email: newEntity.email.toLowerCase() });
     if (user) throw new Error("User already exists");
 
-    const encryptedPassword: string = await AuthService.getInstance().encryptPassword(newEntity.password);
+    const encryptedPassword: string = await AuthServices.getInstance().encryptPassword(newEntity.password);
 
     newEntity.email = newEntity.email.toLowerCase();
     newEntity.password = encryptedPassword;
@@ -43,11 +42,11 @@ export class UsersServices implements BaseCRUDUtils<User> {
     return this.repository.findById(id);
   };
 
-  public find = async (options?: object): Promise<User[]> => {
+  public find = async (options?: Record<string, unknown>): Promise<User[]> => {
     return this.repository.find(options);
   };
 
-  public findOne = async (options?: object): Promise<User> => {
+  public findOne = async (options?: Record<string, unknown>): Promise<User> => {
     return this.repository.findOne(options);
   };
 

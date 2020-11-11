@@ -16,7 +16,7 @@ export class Transformer<T> {
     this.comparator = input;
   }
 
-  convertToModel(input: any, options: ComparatorOptions): T | null {
+  convertToModel(input: Record<string, unknown>, options: ComparatorOptions): T | null {
     if (isNotNil(input) && isNotNil(this.comparator)) {
       const r = {} as T;
       Object.entries(this.comparator).forEach(function ([k, v]) {

@@ -3,7 +3,7 @@ import path from "path";
 
 const pathToPackageJSON = (): string => path.resolve(__dirname, "../", "../", "package.json");
 
-const getPackageJSON = (path: string): object => {
+const getPackageJSON = (path: string): Record<string, string> => {
   if (fs.existsSync(path)) {
     return JSON.parse(fs.readFileSync(path, { encoding: "utf8" }));
   }

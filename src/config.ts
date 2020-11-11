@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import { logger } from "./utils/logger.utils";
 
 export enum environments {
   PRODUCTION = "production",
@@ -28,7 +29,7 @@ export default class Config {
 
   private constructor() {
     let path = "";
-    console.info("Config : ", process.env.NODE_ENV);
+    logger.info("Config : ", process.env.NODE_ENV);
 
     switch (process.env.NODE_ENV) {
       case environments.PRODUCTION:

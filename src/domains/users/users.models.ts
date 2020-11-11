@@ -14,11 +14,13 @@ export class User extends mongoose.Document {
   password?: string;
   phone?: string;
   status: boolean;
+  updatedAt?: string;
 
   public static fromUserDTO = (userDto: UserDTO): User => {
     //const user: User = Object.assign(new MyModel(), userDto);
     const user = new MyModel(userDto);
     user.createdAt = userDto.createdAt;
+    user.updatedAt = userDto.updatedAt;
     user.email = userDto.email;
     user.firstName = userDto.firstName;
     user.isAdmin = userDto.isAdmin;
@@ -39,13 +41,14 @@ export class User extends mongoose.Document {
 const UserSchema: Schema = new Schema<User>(
   {
     createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
     email: { default: "", type: String, unique: true },
     firstName: { default: "", type: String },
-    isAdmin: Boolean,
+    isAdmin: { default: false, type: Boolean },
     lastName: { default: "", type: String },
     password: { default: "", type: String },
     phone: { default: "", type: String },
-    status: Boolean,
+    status: { default: true, type: Boolean },
   },
   { timestamps: true }
 );

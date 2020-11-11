@@ -14,6 +14,9 @@ import { IDTO } from "./dto.utils";
  *         createdAt:
  *           type: string
  *           readOnly: true
+ *         updatedAt:
+ *           type: string
+ *           readOnly: true
  *         email:
  *           type: string
  *           format: email
@@ -32,13 +35,14 @@ import { IDTO } from "./dto.utils";
  */
 export interface UserDTO extends IDTO {
   createdAt?: string;
+  updatedAt?: string;
   email: string;
   firstName?: string;
   isAdmin?: boolean;
   lastName?: string;
   password?: string;
   phone?: string;
-  status: boolean;
+  status?: boolean;
   _id?: string;
 }
 

@@ -4,8 +4,6 @@ import AdminMiddlewares from "../../middlewares/auth/admin.middlewares";
 
 export const userEndpoints: Router = Router();
 
-const usersControllers: UsersControllers = new UsersControllers();
-
 /**
  * @swagger
  * /v1/secure/users:
@@ -36,7 +34,7 @@ const usersControllers: UsersControllers = new UsersControllers();
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.get("/users", AdminMiddlewares.isAdmin, usersControllers.getUsers);
+userEndpoints.get("/users", AdminMiddlewares.isAdmin, UsersControllers.getInstance().getUsers);
 
 /**
  * @swagger
@@ -72,7 +70,7 @@ userEndpoints.get("/users", AdminMiddlewares.isAdmin, usersControllers.getUsers)
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.get("/users/:userId", AdminMiddlewares.isAdmin, usersControllers.getUser);
+userEndpoints.get("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().getUser);
 
 /**
  * @swagger
@@ -116,7 +114,7 @@ userEndpoints.get("/users/:userId", AdminMiddlewares.isAdmin, usersControllers.g
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.put("/users/:userId", AdminMiddlewares.isAdmin, usersControllers.updateUser);
+userEndpoints.put("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().updateUser);
 
 /**
  * @swagger
@@ -153,7 +151,7 @@ userEndpoints.put("/users/:userId", AdminMiddlewares.isAdmin, usersControllers.u
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.post("/users", AdminMiddlewares.isAdmin, usersControllers.postUser);
+userEndpoints.post("/users", AdminMiddlewares.isAdmin, UsersControllers.getInstance().postUser);
 
 /**
  * @swagger
@@ -188,4 +186,4 @@ userEndpoints.post("/users", AdminMiddlewares.isAdmin, usersControllers.postUser
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.delete("/users/:userId", AdminMiddlewares.isAdmin, usersControllers.deleteUser);
+userEndpoints.delete("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().deleteUser);
