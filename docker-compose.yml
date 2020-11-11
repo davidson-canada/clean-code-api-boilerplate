@@ -17,7 +17,4 @@ services:
       - type: bind
         source: ./src
         target: /clean-code-api-boilerplate/src
-      - type: bind
-        source: ./packages
-        target: /clean-code-api-boilerplate/packages
     tty: true
