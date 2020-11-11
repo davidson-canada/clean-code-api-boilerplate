@@ -1,6 +1,6 @@
 import { Router } from "express";
 import UsersControllers from "./users.controllers";
-import AdminMiddlewares from "../middlewares/auth/admin.middlewares";
+import AdminMiddlewares from "../../middlewares/auth/admin.middlewares";
 
 export const userEndpoints: Router = Router();
 

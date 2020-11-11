@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import passport from "passport";
 import LoginServices from "./login.services";
 import { ResetPasswordDTO, ReturnSubmitLoginDTO } from "../shared/dto/login.dto";
-import { BaseController } from "../utils/baseController.utils";
+import { BaseController } from "../../utils/baseController.utils";
 
 export default class LoginControllers extends BaseController {
   constructor() {

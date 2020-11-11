@@ -1,7 +1,7 @@
 import { UsersRepositories } from "./users.repositories";
 import { User } from "./users.models";
-import { BaseCRUDUtils } from "../utils/baseCRUD.utils";
-import AuthService from "../middlewares/auth/auth.service";
+import { BaseCRUDUtils } from "../../utils/baseCRUD.utils";
+import AuthService from "../../middlewares/auth/auth.service";
 
 export class UsersServices implements BaseCRUDUtils<User> {
   private repository: UsersRepositories;

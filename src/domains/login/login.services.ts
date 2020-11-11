@@ -1,4 +1,4 @@
-import AuthService from "../middlewares/auth/auth.service";
+import AuthService from "../../middlewares/auth/auth.service";
 import UserSchema, { User } from "../users/users.models";
 import { UsersRepositories } from "../users/users.repositories";
 import { UsersServices } from "../users/users.services";

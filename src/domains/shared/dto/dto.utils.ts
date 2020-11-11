@@ -1,4 +1,4 @@
-import { isNotNil } from "../../utils/is-not-nil";
+import { isNotNil } from "../../../utils/is-not-nil";
 
 export interface IDTO {}
 

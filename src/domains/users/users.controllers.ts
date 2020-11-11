@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import passport from "passport";
 import { User } from "./users.models";
 import { UsersServices } from "./users.services";
-import AuthService from "../middlewares/auth/auth.service";
+import AuthService from "../../middlewares/auth/auth.service";
 import { GetUserDTO, UserDTO, UsersDTO } from "../shared/dto/users.dto";
-import { BaseController } from "../utils/baseController.utils";
+import { BaseController } from "../../utils/baseController.utils";
 
 export default class UsersControllers extends BaseController {
   private usersServices: UsersServices;
@@ -51,7 +51,8 @@ export default class UsersControllers extends BaseController {
       const userToUpdate: User = User.fromUserDTO(userDTO);
 
       if (userToUpdate.password)
-        userToUpdate.password = await AuthService.getInstance().encryptPassword(userToUpdate.password); // TODO : creer variable de classe
+        userToUpdate.password = await AuthService.getInstance().encryptPassword(userToUpdate.password);
+      // TODO : creer variable de classe
       else delete userToUpdate.password;
       delete userToUpdate.isAdmin; // ne semble pas etre pris en compte
       delete userToUpdate.createdAt;

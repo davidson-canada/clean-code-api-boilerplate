@@ -1,5 +1,5 @@
 import * as express from "express";
-import { IDTO } from "../shared/dto/dto.utils";
+import { IDTO } from "../domains/shared/dto/dto.utils";
 import { constants } from "http2";
 
 export abstract class BaseController {
@@ -27,25 +27,25 @@ export abstract class BaseController {
     return BaseController.jsonResponse(res, constants.HTTP_STATUS_UNAUTHORIZED, message ? message : "Unauthorized");
   }
 
-  public forbidden (res: express.Response, message?: string) {
-    return BaseController.jsonResponse(res, constants.HTTP_STATUS_FORBIDDEN, message ? message : 'Forbidden');
+  public forbidden(res: express.Response, message?: string) {
+    return BaseController.jsonResponse(res, constants.HTTP_STATUS_FORBIDDEN, message ? message : "Forbidden");
   }
 
-  public notFound (res: express.Response, message?: string) {
-    return BaseController.jsonResponse(res, constants.HTTP_STATUS_NOT_FOUND, message ? message : 'Not found');
+  public notFound(res: express.Response, message?: string) {
+    return BaseController.jsonResponse(res, constants.HTTP_STATUS_NOT_FOUND, message ? message : "Not found");
   }
 
-  public conflict (res: express.Response, message?: string) {
-    return BaseController.jsonResponse(res, constants.HTTP_STATUS_CONFLICT, message ? message : 'Conflict');
+  public conflict(res: express.Response, message?: string) {
+    return BaseController.jsonResponse(res, constants.HTTP_STATUS_CONFLICT, message ? message : "Conflict");
   }
 
-  public todo (res: express.Response) {
-    return BaseController.jsonResponse(res, constants.HTTP_STATUS_TEAPOT, 'TODO');
+  public todo(res: express.Response) {
+    return BaseController.jsonResponse(res, constants.HTTP_STATUS_TEAPOT, "TODO");
   }
 
-  public fail (res: express.Response, error: Error | string) {
+  public fail(res: express.Response, error: Error | string) {
     return res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({
       message: error.toString(),
-    })
+    });
   }
 }

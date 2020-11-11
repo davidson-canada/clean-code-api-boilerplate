@@ -4,11 +4,11 @@ const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 import Config from "../../config";
 import bcrypt from "bcrypt";
-import LoginServices from "../../login/login.services";
-import { JWTUser } from "../../login/login.models";
+import LoginServices from "../../domains/login/login.services";
+import { JWTUser } from "../../domains/login/login.models";
 import jwt from "jsonwebtoken";
-import { ReturnSubmitLoginDTO } from "../../shared/dto/login.dto";
-import { UsersServices } from "../../users/users.services";
+import { ReturnSubmitLoginDTO } from "../../domains/shared/dto/login.dto";
+import { UsersServices } from "../../domains/users/users.services";
 
 export default class AuthService {
   private static instance: AuthService;
@@ -85,7 +85,6 @@ passport.use(
     }
   )
 );
-
 
 // Decrypte token from every request
 passport.use(

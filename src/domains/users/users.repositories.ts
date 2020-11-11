@@ -1,5 +1,5 @@
 import UserSchema, { User } from "./users.models";
-import { BaseCRUDUtils } from "../utils/baseCRUD.utils";
+import { BaseCRUDUtils } from "../../utils/baseCRUD.utils";
 
 export class UsersRepositories implements BaseCRUDUtils<User> {
   async find(options: object): Promise<User[]> {
