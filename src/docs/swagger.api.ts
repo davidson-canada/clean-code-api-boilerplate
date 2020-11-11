@@ -1,7 +1,7 @@
 import swaggerJSDoc, { SwaggerDefinition, Options } from "swagger-jsdoc";
 import swaggerUi, { SwaggerOptions } from "swagger-ui-express";
 import Config from "../config";
-import { versionUtils } from "../version/versions.utils";
+import { versionUtils } from "../utils/versions.utils";
 
 const swaggerDefinition: SwaggerDefinition = {
   openapi: "3.0.0",
