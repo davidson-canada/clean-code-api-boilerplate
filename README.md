@@ -38,6 +38,10 @@ In *.env
 This project can be built with Docker with this simple line command :
 
 ```
+yarn start:docker
+```
+or
+```
 docker-compose up --build
 ```
 
@@ -69,9 +73,20 @@ yarn test
 
 ## Deploy on Google Cloud Run
 
+To deploy your API into a Google Cloud Run instance, you need a Google Cloud plateform account configured with a billing account and the gcloud cli installed and configured : https://cloud.google.com/run/docs/quickstarts/build-and-deploy
+
+Change the project name in the package.json scripts gcp-build and gcp-deploy-* to match your gcp project name : gcr.io/PROJECT-ID/container-name
+
+Then, run the following command to build and push the container to gcp : 
+
 ```
-gcloud builds submit --tag gcr.io/dav-talk-gcr/clean-code-api-boilerplate
-gcloud run deploy template-api-development --update-env-vars NODE_ENV=development --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated
-gcloud run deploy template-api-staging --update-env-vars NODE_ENV=staging --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated
-gcloud run deploy template-api-production --update-env-vars NODE_ENV=production --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated
+yarn gcp-build
+```
+
+And the following commands to deploy your environments : 
+
+```
+yarn gcp-deploy-dev
+yarn gcp-deploy-staging
+yarn gcp-deploy-prod
 ```

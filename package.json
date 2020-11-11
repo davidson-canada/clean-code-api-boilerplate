@@ -17,7 +17,12 @@
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "test": "jest",
     "watch": "tsc -d --watch",
-    "start": "npm-run-all clean build --parallel watch dev --print-label"
+    "start": "npm-run-all clean build --parallel watch dev --print-label",
+    "start:docker": "docker-compose up --build",
+    "gcp-build": "gcloud builds submit --tag gcr.io/dav-talk-gcr/clean-code-api-boilerplate",
+    "gcp-deploy-dev": "gcloud run deploy clean-code-api-development --update-env-vars NODE_ENV=development --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated",
+    "gcp-deploy-staging": "gcloud run deploy clean-code-api-staging --update-env-vars NODE_ENV=staging --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated",
+    "gcp-deploy-prod": "gcloud run deploy clean-code-api-production --update-env-vars NODE_ENV=production --image gcr.io/dav-talk-gcr/clean-code-api-boilerplate --region northamerica-northeast1 --memory 512Mi --platform managed --quiet --allow-unauthenticated",
   },
   "dependencies": {
     "axios": "^0.19.2",
