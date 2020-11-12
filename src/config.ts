@@ -14,7 +14,6 @@ export default class Config {
   public port: number;
   public prettyLog: boolean;
   public apiKey: string;
-  public apiUrl: string;
   public jwtSecretKey: string;
   public jwtTtl: string;
   public mongodbUri: string;
@@ -52,7 +51,6 @@ export default class Config {
     this.environment = process.env.NODE_ENV || environments.LOCAL;
     this.port = parseInt(process.env.NODE_PORT) || parseInt(process.env.PORT);
     this.apiKey = process.env.API_KEY;
-    this.apiUrl = process.env.API_URL;
     this.jwtSecretKey = process.env.JWT_SECRET_KEY;
     this.jwtTtl = process.env.JWT_TTL;
     this.mongodbUri = process.env.MONGODB_URI;
