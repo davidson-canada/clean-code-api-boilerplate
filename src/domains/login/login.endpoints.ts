@@ -1,12 +1,6 @@
-import { Router } from "express";
-import LoginControllers from "./login.controllers";
-
-export const publicLoginEndpoints: Router = Router();
-export const privateLoginEndpoints: Router = Router();
-
 /**
  * @swagger
- * /v1/signin:
+ * /login/signin:
  *   post:
  *     tags:
  *       - "[User] Login"
@@ -44,11 +38,10 @@ export const privateLoginEndpoints: Router = Router();
  *       '500':
  *         description: Internal server error
  */
-publicLoginEndpoints.post("/signin", LoginControllers.getInstance().signIn);
 
 /**
  * @swagger
- * /v1/signup:
+ * /login/signup:
  *   post:
  *     tags:
  *       - "[User] Login"
@@ -86,11 +79,10 @@ publicLoginEndpoints.post("/signin", LoginControllers.getInstance().signIn);
  *       '500':
  *         description: Internal server error
  */
-publicLoginEndpoints.post("/signup", LoginControllers.getInstance().signUp);
 
 /**
  * @swagger
- * /v1/secure/resetPassword:
+ * /login/resetPassword:
  *   put:
  *     tags:
  *       - "[User] Login"
@@ -123,4 +115,3 @@ publicLoginEndpoints.post("/signup", LoginControllers.getInstance().signUp);
  *       '500':
  *         description: Internal server error
  */
-privateLoginEndpoints.put("/resetPassword", LoginControllers.getInstance().resetPassword);

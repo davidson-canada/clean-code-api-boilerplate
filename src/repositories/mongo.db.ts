@@ -6,7 +6,7 @@ export default class MongoDbConnector {
   private static instance: MongoDbConnector;
   private db = null;
 
-  private constructor() {
+  public constructor() {
     mongoose.set("useCreateIndex", true);
 
     this.initMongoDb();

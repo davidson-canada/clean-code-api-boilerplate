@@ -10,5 +10,5 @@ WORKDIR /clean-code-api-boilerplate
 COPY package.json *.env ./
 RUN ["yarn", "--production"]
 COPY --from=build /clean-code-api-boilerplate/dist ./dist
-CMD ["node", "dist/server.js"]
+CMD ["yarn", "start:prod"]
 

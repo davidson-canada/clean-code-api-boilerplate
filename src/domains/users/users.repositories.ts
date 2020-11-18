@@ -1,18 +1,10 @@
 import UserSchema, { User } from "./users.models";
 import { BaseCRUDUtils } from "../../utils/baseCRUD.utils";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class UsersRepositories implements BaseCRUDUtils<User> {
-  private static instance: UsersRepositories;
-
-  private constructor() {}
-
-  public static getInstance = (): UsersRepositories => {
-    if (!UsersRepositories.instance) {
-      UsersRepositories.instance = new UsersRepositories();
-    }
-
-    return UsersRepositories.instance;
-  };
+  public constructor() {}
 
   async find(options: Record<string, unknown>): Promise<User[]> {
     return UserSchema.find(options).lean();

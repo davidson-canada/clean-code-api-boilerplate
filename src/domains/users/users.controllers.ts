@@ -5,28 +5,17 @@ import AuthServices from "../../middlewares/auth/auth.services";
 import { GetUserDTO, UserDTO, UsersDTO } from "../shared/dto/users.dto";
 import { BaseController } from "../../utils/baseController.utils";
 import { logger } from "../../utils/logger.utils";
+import { Body, Controller, Delete, Get, Param, Post, Put, Res } from "@nestjs/common";
 
+@Controller("users")
 export default class UsersControllers extends BaseController {
-  private static instance: UsersControllers;
-  private usersServices: UsersServices;
-  private authService: AuthServices;
-
-  private constructor() {
+  constructor(private usersServices: UsersServices, private authService: AuthServices) {
     super();
-    this.authService = AuthServices.getInstance();
-    this.usersServices = UsersServices.getInstance();
   }
 
-  public static getInstance = (): UsersControllers => {
-    if (!UsersControllers.instance) {
-      UsersControllers.instance = new UsersControllers();
-    }
-
-    return UsersControllers.instance;
-  };
-
-  public getUser = async (req: Request, res: Response): Promise<Response> => {
-    const getUserDTO: GetUserDTO = { userId: req.params.userId };
+  @Get("/:userId")
+  async getUser(@Param() getUserDTO: GetUserDTO, @Res() res): Promise<Response> {
+    //const getUserDTO: GetUserDTO = { userId: req.params.userId };
     if (!getUserDTO.userId) {
       return super.badRequest(res, "Error: Please provide a 'userId'.");
     } else {
@@ -39,9 +28,10 @@ export default class UsersControllers extends BaseController {
           return super.notFound(res, e.message);
         });
     }
-  };
+  }
 
-  public getUsers = async (req: Request, res: Response): Promise<Response> => {
+  @Get()
+  async getUsers(@Res() res): Promise<Response> {
     try {
       const users: User[] = await this.usersServices.find();
 
@@ -54,11 +44,12 @@ export default class UsersControllers extends BaseController {
     } catch (e) {
       return super.fail(res, e.message);
     }
-  };
+  }
 
-  public updateUser = async (req: Request, res: Response): Promise<Response> => {
+  @Put("/:userId")
+  async updateUser(@Param() userId: string, @Body() userDTO: UserDTO, @Res() res): Promise<Response> {
     try {
-      const userDTO: UserDTO = { _id: req.params.userId, ...req.body };
+      userDTO._id = userId;
       const userToUpdate: User = User.fromUserDTO(userDTO);
 
       if (userToUpdate.password) userToUpdate.password = await this.authService.encryptPassword(userToUpdate.password);
@@ -79,11 +70,12 @@ export default class UsersControllers extends BaseController {
       logger.error("an error occurred when trying to update the user : ", e);
       return super.fail(res, e.message);
     }
-  };
+  }
 
-  public postUser = async (req: Request, res: Response): Promise<Response> => {
+  @Post("/:userId")
+  async postUser(@Param() userId: string, @Body() userDTO: UserDTO, @Res() res): Promise<Response> {
     try {
-      const userDTO: UserDTO = { _id: req.params.userId, ...req.body };
+      userDTO._id = userId;
       const userToCreate: User = User.fromUserDTO(userDTO);
 
       this.usersServices
@@ -100,12 +92,11 @@ export default class UsersControllers extends BaseController {
       logger.error(e);
       return super.fail(res, e.message);
     }
-  };
+  }
 
-  public deleteUser = async (req: Request, res: Response): Promise<Response> => {
+  @Delete("/:userId")
+  async deleteUser(@Param() getUserDTO: GetUserDTO, @Res() res): Promise<Response> {
     try {
-      const getUserDTO: GetUserDTO = { userId: req.params.userId };
-
       const result = await this.usersServices.deleteById(getUserDTO.userId);
       if (result) {
         return super.ok(res, { message: "User has been deleted" });
@@ -115,5 +106,5 @@ export default class UsersControllers extends BaseController {
     } catch (e) {
       return super.fail(res, e.message);
     }
-  };
+  }
 }

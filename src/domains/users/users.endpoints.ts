@@ -1,12 +1,11 @@
 import { Router } from "express";
 import UsersControllers from "./users.controllers";
-import AdminMiddlewares from "../../middlewares/auth/admin.middlewares";
 
 export const userEndpoints: Router = Router();
 
 /**
  * @swagger
- * /v1/secure/users:
+ * /users:
  *   get:
  *     tags:
  *       - "[Admin] Users"
@@ -34,11 +33,11 @@ export const userEndpoints: Router = Router();
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.get("/users", AdminMiddlewares.isAdmin, UsersControllers.getInstance().getUsers);
+//userEndpoints.get("/users", UsersControllers.getInstance().getUsers);
 
 /**
  * @swagger
- * /v1/secure/users/{userId}:
+ * /users/{userId}:
  *   get:
  *     tags:
  *       - "[Admin] Users"
@@ -70,11 +69,11 @@ userEndpoints.get("/users", AdminMiddlewares.isAdmin, UsersControllers.getInstan
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.get("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().getUser);
+//userEndpoints.get("/users/:userId", UsersControllers.getInstance().getUser);
 
 /**
  * @swagger
- * /v1/secure/users/{userId}:
+ * /users/{userId}:
  *   put:
  *     tags:
  *       - "[Admin] Users"
@@ -114,11 +113,11 @@ userEndpoints.get("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.g
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.put("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().updateUser);
+//userEndpoints.put("/users/:userId", UsersControllers.getInstance().updateUser);
 
 /**
  * @swagger
- * /v1/secure/users:
+ * /users:
  *   post:
  *     tags:
  *       - "[Admin] Users"
@@ -151,11 +150,11 @@ userEndpoints.put("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.g
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.post("/users", AdminMiddlewares.isAdmin, UsersControllers.getInstance().postUser);
+//userEndpoints.post("/users", UsersControllers.getInstance().postUser);
 
 /**
  * @swagger
- * /v1/secure/users/{userId}:
+ * /users/{userId}:
  *   delete:
  *     tags:
  *       - "[Admin] Users"
@@ -186,4 +185,4 @@ userEndpoints.post("/users", AdminMiddlewares.isAdmin, UsersControllers.getInsta
  *       '500':
  *         description: Internal server error
  */
-userEndpoints.delete("/users/:userId", AdminMiddlewares.isAdmin, UsersControllers.getInstance().deleteUser);
+//userEndpoints.delete("/users/:userId", UsersControllers.getInstance().deleteUser);

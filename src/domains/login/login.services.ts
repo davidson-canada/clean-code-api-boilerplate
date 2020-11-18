@@ -3,26 +3,15 @@ import { UsersServices } from "../users/users.services";
 
 import { User } from "../users/users.models";
 import Config from "../../config";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export default class LoginServices {
-  private static instance: LoginServices;
-  private usersServices: UsersServices;
-  private authServices: AuthServices;
   private config: Config;
 
-  private constructor() {
-    this.usersServices = UsersServices.getInstance();
-    this.authServices = AuthServices.getInstance();
+  public constructor(private usersServices: UsersServices, private authServices: AuthServices) {
     this.config = Config.getInstance();
   }
-
-  public static getInstance = (): LoginServices => {
-    if (!LoginServices.instance) {
-      LoginServices.instance = new LoginServices();
-    }
-
-    return LoginServices.instance;
-  };
 
   login = async (email: string, passwordInput: string): Promise<any> => {
     const user = await this.usersServices.findOne({ email });

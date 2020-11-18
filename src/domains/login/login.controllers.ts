@@ -1,39 +1,27 @@
-import { Request, Response } from "express";
-import passport from "passport";
 import LoginServices from "./login.services";
+import { Response } from "express";
 import { ResetPasswordDTO, ReturnSubmitLoginDTO, SubmitLoginDTO } from "../shared/dto/login.dto";
 import { BaseController } from "../../utils/baseController.utils";
 import { User } from "../users/users.models";
 import { UsersServices } from "../users/users.services";
 import AuthServices from "../../middlewares/auth/auth.services";
 import { UserDTO } from "../shared/dto/users.dto";
+import { Body, Controller, Post, Put, Res } from "@nestjs/common";
 
+@Controller("login")
 export default class LoginControllers extends BaseController {
-  private static instance: LoginControllers;
-  private userServices: UsersServices;
-  private loginServices: LoginServices;
-  private authServices: AuthServices;
-
-  private constructor() {
+  constructor(
+    private loginServices: LoginServices,
+    private userServices: UsersServices,
+    private authServices: AuthServices
+  ) {
     super();
-    this.userServices = UsersServices.getInstance();
-    this.loginServices = LoginServices.getInstance();
-    this.authServices = AuthServices.getInstance();
   }
 
-  public static getInstance = (): LoginControllers => {
-    if (!LoginControllers.instance) {
-      LoginControllers.instance = new LoginControllers();
-    }
-
-    return LoginControllers.instance;
-  };
-
-  public signIn = async (req: Request, res: Response): Promise<Response> => {
-    const submitLoginDTO: SubmitLoginDTO = { ...req.body };
-
+  @Post("signin")
+  async signIn(@Body() submitLoginDTO: SubmitLoginDTO, @Res() res): Promise<Response> {
     try {
-      this.loginServices
+      return this.loginServices
         .login(submitLoginDTO.email.toLowerCase(), submitLoginDTO.password)
         .then((user: User) => {
           if (user.status) {
@@ -53,11 +41,11 @@ export default class LoginControllers extends BaseController {
     } catch (e) {
       return super.fail(res, e.message);
     }
-  };
+  }
 
-  public signUp = async (req: Request, res: Response): Promise<Response> => {
+  @Post("signup")
+  async signUp(@Body() userDTO: UserDTO, @Res() res): Promise<Response> {
     try {
-      const userDTO: UserDTO = req.body;
       const newUser: any = await this.userServices.create(User.fromUserDTO(userDTO));
       const response: ReturnSubmitLoginDTO = {
         token: this.authServices.getJWT(newUser),
@@ -68,16 +56,18 @@ export default class LoginControllers extends BaseController {
     } catch (e) {
       return super.fail(res, e.message);
     }
-  };
+  }
 
-  public resetPassword = async (req: Request, res: Response): Promise<Response> => {
+  @Put("resetPassword")
+  async resetPassword(@Body() resetPasswordDTO: ResetPasswordDTO, @Res() res): Promise<Response> {
     try {
-      const resetPasswordDTO: ResetPasswordDTO = { ...req.body };
+      //const resetPasswordDTO: ResetPasswordDTO = { ...req.body };
 
       if (resetPasswordDTO.userId && resetPasswordDTO.oldPassword && resetPasswordDTO.newPassword) {
         const user: User = await this.userServices.findById(resetPasswordDTO.userId);
 
         await this.loginServices.forgetUserPassword(user, resetPasswordDTO.oldPassword, resetPasswordDTO.newPassword);
+
         return super.ok(res, {
           message: "Password has been updated",
         });
@@ -87,5 +77,5 @@ export default class LoginControllers extends BaseController {
     } catch (e) {
       return super.fail(res, e.message);
     }
-  };
+  }
 }

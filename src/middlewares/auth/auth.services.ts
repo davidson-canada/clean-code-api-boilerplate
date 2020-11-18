@@ -5,7 +5,9 @@ import jwt from "jsonwebtoken";
 import { User } from "../../domains/users/users.models";
 import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export default class AuthServices {
   private static instance: AuthServices;
   private config: Config;
@@ -18,7 +20,7 @@ export default class AuthServices {
     return AuthServices.instance;
   };
 
-  private constructor() {
+  public constructor() {
     this.config = Config.getInstance();
     this.initJwtDecryption();
   }

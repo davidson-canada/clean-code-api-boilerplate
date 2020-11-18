@@ -1,4 +1,5 @@
 FROM node:14-slim as build
+RUN apt-get update && apt-get install -y procps
 WORKDIR /clean-code-api-boilerplate
 COPY *.json *.js *.env ./
 RUN ["yarn"]
